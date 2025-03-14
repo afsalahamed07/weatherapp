@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/User.js";
+import { getWeatherByCity } from "../infra/openweather.js";
 
 export async function registerUser(req: Request, res: Response) {
   try {
@@ -45,6 +46,28 @@ export async function updateUser(req: Request, res: Response) {
     res.status(200).json(upadtedUser);
   } catch (error) {
     console.error("Update User Failed:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+}
+
+export async function weatherDay(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (!user.location) {
+      return res.status(400).json({ message: "User location is not set" });
+    }
+
+    const weather = await getWeatherByCity(user.location);
+
+    res.status(200).json(weather);
+  } catch (error) {
+    console.error("Get Weather Failed:", error);
     res.status(500).json({ message: "Server Error" });
   }
 }
