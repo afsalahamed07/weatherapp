@@ -6,6 +6,8 @@ export interface IUser extends Document {
   email: string;
   password: string;
   location?: string;
+  lat?: number;
+  lon?: number;
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -15,6 +17,8 @@ const UserSchema: Schema = new Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     location: { type: String },
+    lat: { type: Number },
+    lon: { type: Number },
   },
   { timestamps: true },
 );

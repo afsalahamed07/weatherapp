@@ -3,7 +3,7 @@ dotenv.config();
 
 const googleApiKey = process.env.GEO_CODING_API as string;
 
-export async function getCityFromCOordinates(lat: number, lon: number) {
+export async function getCityFromCoordinates(lat: number, lon: number) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=${googleApiKey}`;
 
   const response = await fetch(url);
