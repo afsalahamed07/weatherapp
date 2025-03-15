@@ -4,6 +4,7 @@ import connectDB from "./config/db.js";
 import User from "./models/User.js";
 import { sendMail } from "./infra/mailer.js";
 import { getWeatherByCity } from "./infra/openweather.js";
+import { generateText } from "./infra/gemini.js";
 
 const app = express();
 
@@ -27,13 +28,24 @@ for (let user of users) {
       console.log(
         `Weather for ${user.location}: ${weather.weather[0].description}`,
       );
-      sendMail(
-        user.email,
-        "Weather",
-        `The weather in ${user.location} is ${weather.weather[0].description}`,
-      );
+      const prompt = `The current weather in ${weather.name} is ${weather.weather[0].description} with a temperature of ${weather.main.temp}°C. Compose a humorous message regarding the weather. Incorporate the weather data in you message aswell`;
+      const message = await generateText(prompt);
+
+      const emailSubject = `Weather Update for ${user.location}`;
+      const emailBody = `Ola ${user.name}!
+
+              Here is your weather update:
+              ${message}
+
+              Stay prepared and have a great day!
+
+              Regards,
+              Your Weather App`;
+
+      sendMail(user.email, emailSubject, emailBody);
     } catch (error) {
       console.error(`Failed to get weather for ${user.location}`);
+      console.error(error);
     }
   }
 }
