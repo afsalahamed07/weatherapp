@@ -6,6 +6,7 @@ import { sendMail } from "./infra/mailer.js";
 import { getWeatherByCity } from "./infra/openweather.js";
 import { generateText } from "./infra/gemini.js";
 import passport from "./config/passport.js";
+import { getCityFromCOordinates } from "./infra/googleGeocode.js";
 
 const app = express();
 
@@ -31,36 +32,39 @@ const PORT = 3000;
 
 const users = await User.find();
 
-for (let user of users) {
-  if (!user.location) {
-    console.log(`User ${user.name} does not have a city`);
-  } else {
-    try {
-      const weather = await getWeatherByCity(user.location);
-      console.log(
-        `Weather for ${user.location}: ${weather.weather[0].description}`,
-      );
-      const prompt = `The current weather in ${weather.name} is ${weather.weather[0].description} with a temperature of ${weather.main.temp}°C. Compose a humorous message regarding the weather. Incorporate the weather data in you message aswell`;
-      const message = await generateText(prompt);
-
-      const emailSubject = `Weather Update for ${user.location}`;
-      const emailBody = `Ola ${user.name}!
-
-              Here is your weather update:
-              ${message}
-
-              Stay prepared and have a great day!
-
-              Regards,
-              Your Weather App`;
-
-      // sendMail(user.email, emailSubject, emailBody);
-    } catch (error) {
-      console.error(`Failed to get weather for ${user.location}`);
-      console.error(error);
-    }
-  }
-}
+// for (let user of users) {
+//   if (!user.location) {
+//     console.log(`User ${user.name} does not have a city`);
+//   } else {
+//     try {
+//       const weather = await getWeatherByCity(user.location);
+//       console.log(
+//         `Weather for ${user.location}: ${weather.weather[0].description}`,
+//       );
+//       const prompt = `The current weather in ${weather.name} is ${weather.weather[0].description} with a temperature of ${weather.main.temp}°C. Compose a humorous message regarding the weather. Incorporate the weather data in you message aswell`;
+//       const message = await generateText(prompt);
+//
+//       const emailSubject = `Weather Update for ${user.location}`;
+//       const emailBody = `Ola ${user.name}!
+//
+//               Here is your weather update:
+//               ${message}
+//
+//               Stay prepared and have a great day!
+//
+//               Regards,
+//               Your Weather App`;
+//
+//       // sendMail(user.email, emailSubject, emailBody);
+//     } catch (error) {
+//       console.error(`Failed to get weather for ${user.location}`);
+//       console.error(error);
+//     }
+//   }
+// }
+//
+const city = await getCityFromCOordinates(40.7128, -74.006);
+console.log(city);
 
 app.listen(PORT, () => {
   console.log(`Weather app listening on port ${PORT}!`);
