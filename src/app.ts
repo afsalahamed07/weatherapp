@@ -30,27 +30,28 @@ connectDB();
 
 const PORT = 3000;
 
-const users = await User.find();
+async function sendWeatherUpdate() {
+  const users = await User.find();
 
-for (let user of users) {
-  let city = null;
-  if (user.location) {
-    city = user.location;
-    console.log(`User ${user.name} has a city: ${city}`);
-  } else if (user.lat && user.lon) {
-    city = await getCityFromCoordinates(user.lat, user.lon);
-  }
-  if (city != null) {
-    console.log(`Getting weather for ${city}`);
-    try {
-      const weather = await getWeatherByCity(city);
-      console.log(`Weather for ${city}: ${weather.weather[0].description}`);
-      const prompt = `The current weather in ${weather.name} is ${weather.weather[0].description} with a temperature of ${weather.main.temp}°C. Compose a humorous message regarding the weather. Incorporate the weather data in you message aswell`;
-      // const message = await generateText(prompt);
-      const message = "message here";
+  for (let user of users) {
+    let city = null;
+    if (user.location) {
+      city = user.location;
+      console.log(`User ${user.name} has a city: ${city}`);
+    } else if (user.lat && user.lon) {
+      city = await getCityFromCoordinates(user.lat, user.lon);
+    }
+    if (city != null) {
+      console.log(`Getting weather for ${city}`);
+      try {
+        const weather = await getWeatherByCity(city);
+        console.log(`Weather for ${city}: ${weather.weather[0].description}`);
+        const prompt = `The current weather in ${weather.name} is ${weather.weather[0].description} with a temperature of ${weather.main.temp}°C. Compose a humorous message regarding the weather. Incorporate the weather data in you message aswell`;
+        const message = await generateText(prompt);
+        // const message = "message here";
 
-      const emailSubject = `Weather Update for ${user.location}`;
-      const emailBody = `Ola ${user.name}!
+        const emailSubject = `Weather Update for ${user.location}`;
+        const emailBody = `Ola ${user.name}!
 
               Here is your weather update:
               ${message}
@@ -60,15 +61,20 @@ for (let user of users) {
               Regards,
               Your Weather App`;
 
-      // sendMail(user.email, emailSubject, emailBody);
-    } catch (error) {
-      console.error(`Failed to get weather for ${city}`);
-      console.error(error);
+        sendMail(user.email, emailSubject, emailBody);
+      } catch (error) {
+        console.error(`Failed to get weather for ${city}`);
+        console.error(error);
+      }
+    } else {
+      console.log(`User ${user.name} does not have a city`);
     }
-  } else {
-    console.log(`User ${user.name} does not have a city`);
   }
 }
+
+sendWeatherUpdate();
+
+setInterval(sendWeatherUpdate, 3 * 1000 * 60 * 60);
 
 app.listen(PORT, () => {
   console.log(`Weather app listening on port ${PORT}!`);
