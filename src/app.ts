@@ -24,7 +24,11 @@ app.use("/users", userRouter);
 // Mongoose DB Connection
 connectDB();
 
-sendWeatherUpdate();
+try {
+  sendWeatherUpdate();
+} catch (error) {
+  console.error("Error sending weather update:", error);
+}
 
 setInterval(sendWeatherUpdate, 3 * 1000 * 60 * 60);
 
