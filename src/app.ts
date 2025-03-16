@@ -10,6 +10,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`);
+  next();
+});
+
+app.use((req, res, next) => {
   const publicRoutes = ["/users/login", "/users/register", "/"];
 
   if (publicRoutes.includes(req.path)) {
@@ -26,8 +31,13 @@ app.get("/", (req, res) => {
 
 app.use("/users", userRouter);
 
-// Mongoose DB Connection
-connectDB();
+if (process.env.NODE_ENV === "production") {
+  try {
+    await connectDB();
+  } catch (error) {
+    console.error("Error connecting to database:", error);
+  }
+}
 
 try {
   sendWeatherUpdate();
