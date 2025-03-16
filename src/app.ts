@@ -31,25 +31,22 @@ app.get("/", (req, res) => {
 
 app.use("/users", userRouter);
 
-if (process.env.NODE_ENV === "production") {
+export default app;
+
+if (process.env.NODE_ENV !== "production") {
   try {
     await connectDB();
   } catch (error) {
     console.error("Error connecting to database:", error);
   }
-}
 
-try {
-  sendWeatherUpdate();
-} catch (error) {
-  console.error("Error sending weather update:", error);
-}
+  try {
+    sendWeatherUpdate();
+  } catch (error) {
+    console.error("Error sending weather update:", error);
+  }
 
-setInterval(sendWeatherUpdate, 3 * 1000 * 60 * 60);
-
-export default app;
-
-if (process.env.NODE_ENV !== "production") {
+  setInterval(sendWeatherUpdate, 3 * 1000 * 60 * 60);
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
