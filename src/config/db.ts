@@ -3,10 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const isProduction = process.env.NODE_ENV === "production";
-const MONGO_URI = isProduction
-  ? (process.env.MONGO_URI_PROD as string)
-  : (process.env.MONGO_URI as string);
+const MONGO_URI = process.env.MONGO_URI as string;
 
 const connectDB = async () => {
   try {
