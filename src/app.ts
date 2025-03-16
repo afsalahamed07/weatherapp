@@ -10,13 +10,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
-  const publicRoutes = ["/users/login", "/users/register"];
+  const publicRoutes = ["/users/login", "/users/register", "/"];
 
   if (publicRoutes.includes(req.path)) {
     return next();
   }
 
   passport.authenticate("jwt", { session: false })(req, res, next);
+});
+
+// this is to check deployment in vercel
+app.get("/", (req, res) => {
+  res.send("Welcome to the Weather API");
 });
 
 app.use("/users", userRouter);
