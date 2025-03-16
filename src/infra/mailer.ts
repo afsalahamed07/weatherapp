@@ -3,15 +3,17 @@ import dontenv from "dotenv";
 
 dontenv.config();
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT,
-  secure: false,
+const options = {
+  host: process.env.SMTP_HOST!,
+  port: Number(process.env.SMTP_PORT),
+  secure: false, // set to true if you're using SSL
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
+    user: process.env.SMTP_USER!,
+    pass: process.env.SMTP_PASS!,
   },
-});
+};
+
+const transporter = nodemailer.createTransport(options);
 
 export async function sendMail(to: string, subject: string, text: string) {
   try {
