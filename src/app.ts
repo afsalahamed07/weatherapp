@@ -32,8 +32,11 @@ try {
 
 setInterval(sendWeatherUpdate, 3 * 1000 * 60 * 60);
 
-const PORT = process.env.PORT || 3000;
+export default app;
 
-app.listen(PORT, () => {
-  console.log(`Weather app listening on port ${PORT}!`);
-});
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
