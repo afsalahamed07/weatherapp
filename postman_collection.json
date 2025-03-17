@@ -1,0 +1,201 @@
+{
+	"info": {
+		"_postman_id": "64e89f88-3a06-4604-95bf-08d83890b2e3",
+		"name": "CodeScale Weather",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21791690"
+	},
+	"item": [
+		{
+			"name": "registerUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Afsal\",\n    \"email\": \"yojorec834@erapk.com\",\n    \"password\": \"afsal123\",\n    \"lat\":40.730610,\n    \"lon\":73.935242\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://weather-s7vb2kbua-afsals-projects-752591c5.vercel.app/users/register",
+					"protocol": "https",
+					"host": [
+						"weather-s7vb2kbua-afsals-projects-752591c5",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUsers",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZDZmYWZjZTljYTg4ZmJhMTg5NTFlZCIsImVtYWlsIjoieW9qb3JlYzgzNEBlcmFwazIuY29tIiwiaWF0IjoxNzQyMTk2MzM0LCJleHAiOjE3NDIxOTk5MzR9.abpnBlAAyMXjo6d_6CpdsErSoc6gPnhl2eS9EQexMpY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://weather-s7vb2kbua-afsals-projects-752591c5.vercel.app/users",
+					"protocol": "https",
+					"host": [
+						"weather-s7vb2kbua-afsals-projects-752591c5",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateUser",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZDZmYWZjZTljYTg4ZmJhMTg5NTFlZCIsImVtYWlsIjoieW9qb3JlYzgzNEBlcmFwazIuY29tIiwiaWF0IjoxNzQyMTQ1NTEwLCJleHAiOjE3NDIxNDkxMTB9.VHmRLVHrsYrDdGcztTtBDGfv0EYnyY0pvUlBNvLhZ_U",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"location\":\"colombo\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://weather-s7vb2kbua-afsals-projects-752591c5.vercel.app/users/67d7081657ffc46485186927",
+					"protocol": "https",
+					"host": [
+						"weather-s7vb2kbua-afsals-projects-752591c5",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"users",
+						"67d7081657ffc46485186927"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getweahterforday",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZDZmYWZjZTljYTg4ZmJhMTg5NTFlZCIsImVtYWlsIjoieW9qb3JlYzgzNEBlcmFwazIuY29tIiwiaWF0IjoxNzQyMTQ1NTEwLCJleHAiOjE3NDIxNDkxMTB9.VHmRLVHrsYrDdGcztTtBDGfv0EYnyY0pvUlBNvLhZ_U",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://weather-s7vb2kbua-afsals-projects-752591c5.vercel.app/users/67d7081657ffc46485186927/weather",
+					"protocol": "https",
+					"host": [
+						"weather-s7vb2kbua-afsals-projects-752591c5",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"users",
+						"67d7081657ffc46485186927",
+						"weather"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"yojorec834@erapk2.com\",\n    \"password\": \"afsal123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://weather-app-rouge-two-65.vercel.app/users/login",
+					"protocol": "https",
+					"host": [
+						"weather-app-rouge-two-65",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "send update",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZDZmYWZjZTljYTg4ZmJhMTg5NTFlZCIsImVtYWlsIjoieW9qb3JlYzgzNEBlcmFwazIuY29tIiwiaWF0IjoxNzQyMTkzOTIyLCJleHAiOjE3NDIxOTc1MjJ9.xxwvAHuB3COmCPz1Jd5ImHMGYDHk8V_426-0Y7lPc50",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://weather-s7vb2kbua-afsals-projects-752591c5.vercel.app/send-weather-update",
+					"protocol": "https",
+					"host": [
+						"weather-s7vb2kbua-afsals-projects-752591c5",
+						"vercel",
+						"app"
+					],
+					"path": [
+						"send-weather-update"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
