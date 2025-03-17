@@ -31,4 +31,4 @@ A full-stack weather application that fetches current weather data, sends humoro
 
 ## Links
 
-- **Deployed Server:** [Vercel deployment]([https://your-app.vercel.app](https://weather-app-rouge-two-65.vercel.app/))
+- **Deployed Server:** [Vercel deployment](https://your-app.vercel.app](https://weather-app-rouge-two-65.vercel.app)
