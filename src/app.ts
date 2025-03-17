@@ -31,6 +31,17 @@ app.get("/", (req, res) => {
 
 app.use("/users", userRouter);
 
+app.get("/send-weather-update", async (req, res) => {
+  try {
+    console.log("Sending weather update");
+    await sendWeatherUpdate();
+    res.json({ success: true });
+  } catch (error: any) {
+    console.error("Error sending weather update:", error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 export default app;
 
 if (process.env.NODE_ENV !== "production") {

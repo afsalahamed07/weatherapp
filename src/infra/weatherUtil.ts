@@ -36,7 +36,7 @@ export async function sendWeatherUpdate() {
               Regards,
               Your Weather App`;
 
-        sendMail(user.email, emailSubject, emailBody);
+        await sendMail(user.email, emailSubject, emailBody);
       } catch (error) {
         console.error(`Failed to get weather for ${city}`);
         console.error(error);
